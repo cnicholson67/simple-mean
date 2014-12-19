@@ -4,13 +4,11 @@ var http = require("http"),
     path = require("path"),
     fs = require("fs");
 
+
  var port = process.argv[2] || 8888;
- 
  var server =  http.createServer(function(request, response) {
- 
   var uri = url.parse(request.url).pathname
     , filename = path.join(process.cwd(), uri);
-  
   fs.exists(filename, function(exists) {
     if(!exists) {
       response.writeHead(404, {"Content-Type": "text/plain"});

@@ -2,15 +2,16 @@
 
 # simple-mean
 
-
+Stripped down.
 
 ## Usage
 
+node app.js
 
 
 ## Developing
 
-
+Working on Authentication piece.
 
 ### Tools
 

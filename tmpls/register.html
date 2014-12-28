@@ -1,0 +1,34 @@
+﻿<div class="modal-header">
+            <h3 class="modal-title">Register</h3>
+        </div>
+        <div class="modal-body">
+            <table>
+                <tr>
+                    <td>Username:&nbsp;&nbsp;</td>
+                    <td><input ng-model="UserName" /></td>
+                </tr>
+                <tr>
+                    <td>First Name:&nbsp;&nbsp;</td>
+                    <td><input ng-model="FirstName" /></td>
+                </tr>
+                <tr>
+                    <td>Last Name:&nbsp;&nbsp;</td>
+                    <td><input ng-model="LastName" /></td>
+                </tr>
+                <tr>
+                    <td>Email:&nbsp;&nbsp;</td>
+                    <td><input ng-model="Email" /></td>
+                </tr>
+                <tr>
+                    <td>Password:&nbsp;&nbsp;</td>
+                    <td><input type="password" ng-model="UserPass" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="color:red;">{{Message}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="Register()">Register</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

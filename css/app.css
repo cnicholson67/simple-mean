@@ -3,7 +3,19 @@ body {
     color:#111111;
 }
 .header{
-    color:#000066;
+    background-color:#c0c0c0;
+}
+.header .inner{
+	margin-left:10px;
+	margin-right:10px;
+	color:#0000ff;
     font-weight:bold;
     font-size:26px;
+}
+.menu{
+	margin-left:10px;
+	margin-right:10px;
+}
+.main{
+	margin:10px;
 }

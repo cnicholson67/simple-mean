@@ -1,0 +1,22 @@
+﻿<div class="modal-header">
+            <h3 class="modal-title">Enter Credentials</h3>
+        </div>
+        <div class="modal-body">
+            <table>
+                <tr>
+                    <td>Username:&nbsp;&nbsp;</td>
+                    <td><input ng-model="UserName" /></td>
+                </tr>
+                <tr>
+                    <td>Password:&nbsp;&nbsp;</td>
+                    <td><input type="password" ng-model="UserPass" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="color:red;">{{Message}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="Authenticate()">Login</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

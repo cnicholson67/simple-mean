@@ -1,3 +1,13 @@
-<div class="header">New Web Application</div>  
-<div ng-controller="Menu">{{MenuText}}</div>     
-        {{Placeholder}}
+<div class="header">
+ <div class="inner">
+ 	New Web Application
+ </div>	
+</div>  
+<div class="menu" ng-controller="Menu">
+<a ng-hide="Application.IsAuthenticated==true" href="" ng-click="login()">Login</a>
+<a ng-hide="Application.IsAuthenticated==true" href="" ng-click="register()">Register</a>
+<a ng-show="Application.IsAuthenticated==true" href="" ng-click="logout()">Logout</a>
+{{MenuText}}</div>     
+<div class="main">
+ {{Placeholder}}
+</div>      

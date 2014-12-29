@@ -1,18 +1,20 @@
+
 <div class="header">
  <div class="inner">
- 	New Web Application
+ 	Web Application
  </div>	
 </div>  
 <div class="menu">
     <ul>
-        <li ng-repeat="item in Menu" ng-click="LoadPage(item)">{{item.Title}}</li>
+        <li ng-repeat="item in Menu" ng-click="LoadPage(item)" ng-hide="((Application.User==null) && item.Secure==true)">{{item.Title}}</li>
     </ul>
     <div class="login">
     <a ng-hide="Application.IsAuthenticated==true" href="" ng-click="login()">Login</a>
     <a ng-hide="Application.IsAuthenticated==true" href="" ng-click="register()">Register</a>
+    <a ng-show="Application.IsAuthenticated==true" href="" ng-click="EditProfile()">{{Application.User.FirstName}} {{Application.User.LastName}}</a>
     <a ng-show="Application.IsAuthenticated==true" href="" ng-click="logout()">Logout</a>
         </div>
-</div>     
+</div> 
+<div class="my-slide-container">   
 <div class="main" ng-include="DisplayTemplate">
-
-</div>      
+</div></div>     

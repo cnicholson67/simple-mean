@@ -37,12 +37,13 @@ var http = require("http"),
  var users = [];
  var io = require('socket.io')(server);
  io.on('connection', function (socket) {
-     console.log(socket.id);
+     //console.log(socket.id);
      socket.on('register', function (userdata) {
          Users.addNewAccount(userdata, function (err) {
              if (err) {
                  socket.emit('Regfail', { "message": err });
              } else {
+                 delete userdata.Password;
                  socket.emit('RegistrationResult', userdata);
              }
          });
@@ -52,7 +53,8 @@ var http = require("http"),
              if (err) {
                  socket.emit('Authfail', { "message": err });
              } else {
-                 socket.emit('Autheticated', user);
+                 delete user.Password;
+                 socket.emit('Authenticated', user);
              }
          });
      });

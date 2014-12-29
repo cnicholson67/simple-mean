@@ -34,3 +34,33 @@ body {
 .main{
 	margin:10px;
 }
+.my-fade-container {
+  position: relative;
+}
+.main.ng-enter,
+.main.ng-leave {
+  -webkit-transition: 0.5s linear all;
+  -moz-transition: 0.5s linear all;
+  -o-transition: 0.5s linear all;
+  transition: 0.5s linear all;
+}
+.main.ng-enter {
+  z-index: 100;
+  opacity: 0;
+}
+.main.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+.main.ng-leave {
+  z-index: 101;
+  opacity: 1;
+}
+.main.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+.content {
+  position: absolute;
+  width: 98%;
+  height: 90%;
+}
+

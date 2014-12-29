@@ -1,18 +1,30 @@
 var socket = io();
-var app = angular.module('App', ['ui.bootstrap','ngCookies']);
+var app = angular.module('App', ['ui.bootstrap', 'ngCookies', 'ngRoute', 'ngAnimate']);
+
+
+
 app.factory("Application",function(){
 	var AppData = {};
 	return AppData;
 });
-app.controller("Main", function ($scope, $modal, $cookies, Application) {
+app.controller("Main", function ($scope, $modal, $cookies, $http, Application) {
     $scope.LoadPage = function (item) {
         $scope.DisplayTemplate = "/tmpls/" + item.templateUrl + ""
     }
     $scope.$watch("Application", function (val) {
-        $scope.Menu = [{ "Title": "Home", "templateUrl": "home.html", "Controller": "" }, { "Title": "Page2", "templateUrl": "page2.html", "Controller": "" }];
+        $scope.Menu = [{ "Title": "Home", "templateUrl": "home.html", "Controller": "" },
+            { "Title": "About", "templateUrl": "about.html", "Controller": "" },
+            { "Title": "Secure Page", "templateUrl": "SecuredPage.html", "Controller": "" ,"Secure":true}
+        ];
         $scope.LoadPage($scope.Menu[0]);
+        console.log(val);
     });
-    if ($cookies.AppData) {try{$scope.Application = JSON.parse($cookies.AppData);} catch (e) {}}
+    if ($cookies.AppData) {
+        try {
+            $scope.Application = JSON.parse($cookies.AppData);
+            
+        } catch (e) { }
+    }
 	$scope.Placeholder = "Place Holder Text";
 	$scope.register = function () {
 	    var modalInstance = $modal.open({
@@ -53,7 +65,6 @@ app.controller("Main", function ($scope, $modal, $cookies, Application) {
     $scope.login = function () {
         var modalInstance = $modal.open({
             templateUrl: '/tmpls/login.html',
-            size: 'sm',
             controller: function ($scope, $modalInstance, items) {
                 $scope.UserName = "";
                 $scope.UserPass = "";
@@ -61,12 +72,17 @@ app.controller("Main", function ($scope, $modal, $cookies, Application) {
                     $scope.Message = data.message;
                     $scope.$apply();
                 });
-                socket.on('Autheticated', function (data) {
-                    var res = {"IsAuthenticated":true,"Token":data.Token};
+                socket.on('Authenticated', function (data) {
+                    var res = {"IsAuthenticated": true,"User":data};
                     $modalInstance.close(res);
                 });
                 $scope.Authenticate = function () {
                     socket.emit('authenticate', { "UserName": $scope.UserName, "UserPass": $scope.UserPass });
+                }
+                $scope.CheckKey = function (e) {
+                    if (e.keyCode == 13) {
+                        $scope.Authenticate();
+                    }
                 }
                 $scope.cancel = function () {
                     $modalInstance.close();
@@ -85,7 +101,4 @@ app.controller("Main", function ($scope, $modal, $cookies, Application) {
         
     }
 });
-app.controller("Menu", function ($scope, Application) {
 
-    
-});

@@ -8,7 +8,12 @@ var http = require("http"),
  var server =  http.createServer(function(request, response) {
   var uri = url.parse(request.url).pathname
     , filename = path.join(process.cwd(), uri);
-  fs.exists(filename, function(exists) {
+  fs.exists(filename, function (exists) {
+      if (request.url == "/app.js" || request.url == "/UserData.js") {
+          response.writeHead(403, { "Content-Type": "text/plain" });
+          response.end();
+          return;
+      }
     if(!exists) {
       response.writeHead(404, {"Content-Type": "text/plain"});
       response.write("404 Not Found\n");

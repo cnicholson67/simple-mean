@@ -16,6 +16,21 @@ body {
 	margin-left:10px;
 	margin-right:10px;
 }
+.menu>.login{
+    text-align:right;
+    }
+.menu ul,li
+{
+    float:left;
+    list-style:none;
+    cursor:pointer;
+    text-decoration:underline;
+    -webkit-padding-start: 0px;
+}
+    .menu li
+    {
+            padding-right:10px;
+    }
 .main{
 	margin:10px;
 }

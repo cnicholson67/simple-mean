@@ -3,11 +3,16 @@
  	New Web Application
  </div>	
 </div>  
-<div class="menu" ng-controller="Menu">
-<a ng-hide="Application.IsAuthenticated==true" href="" ng-click="login()">Login</a>
-<a ng-hide="Application.IsAuthenticated==true" href="" ng-click="register()">Register</a>
-<a ng-show="Application.IsAuthenticated==true" href="" ng-click="logout()">Logout</a>
-{{MenuText}}</div>     
-<div class="main">
- {{Placeholder}}
+<div class="menu">
+    <ul>
+        <li ng-repeat="item in Menu" ng-click="LoadPage(item)">{{item.Title}}</li>
+    </ul>
+    <div class="login">
+    <a ng-hide="Application.IsAuthenticated==true" href="" ng-click="login()">Login</a>
+    <a ng-hide="Application.IsAuthenticated==true" href="" ng-click="register()">Register</a>
+    <a ng-show="Application.IsAuthenticated==true" href="" ng-click="logout()">Logout</a>
+        </div>
+</div>     
+<div class="main" ng-include="DisplayTemplate">
+
 </div>      

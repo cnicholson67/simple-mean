@@ -4,15 +4,15 @@ app.factory("Application",function(){
 	var AppData = {};
 	return AppData;
 });
-app.controller("Main",function($scope, $modal, $cookies, Application){
-    if ($cookies.AppData) {
-        try{
-            $scope.Application = JSON.parse($cookies.AppData);}
-        catch (e) { }
-	}
-	$scope.$watch("Application",function(val){
-		Application = val;
-	});
+app.controller("Main", function ($scope, $modal, $cookies, Application) {
+    $scope.LoadPage = function (item) {
+        $scope.DisplayTemplate = "/tmpls/" + item.templateUrl + ""
+    }
+    $scope.$watch("Application", function (val) {
+        $scope.Menu = [{ "Title": "Home", "templateUrl": "home.html", "Controller": "" }, { "Title": "Page2", "templateUrl": "page2.html", "Controller": "" }];
+        $scope.LoadPage($scope.Menu[0]);
+    });
+    if ($cookies.AppData) {try{$scope.Application = JSON.parse($cookies.AppData);} catch (e) {}}
 	$scope.Placeholder = "Place Holder Text";
 	$scope.register = function () {
 	    var modalInstance = $modal.open({
@@ -53,6 +53,7 @@ app.controller("Main",function($scope, $modal, $cookies, Application){
     $scope.login = function () {
         var modalInstance = $modal.open({
             templateUrl: '/tmpls/login.html',
+            size: 'sm',
             controller: function ($scope, $modalInstance, items) {
                 $scope.UserName = "";
                 $scope.UserPass = "";
@@ -84,7 +85,7 @@ app.controller("Main",function($scope, $modal, $cookies, Application){
         
     }
 });
-app.controller("Menu",function($scope){
-    $scope.MenuText = "Here is Menu Text";
+app.controller("Menu", function ($scope, Application) {
+
     
 });

@@ -1,16 +1,23 @@
+if (typeof String.prototype.startsWith != 'function') {
+    String.prototype.startsWith = function (str){
+        return this.indexOf(str) == 0;
+    };
+}
 var http = require("http"),
     mime = require('mime'),
     url = require("url"),
     path = require("path"),
     fs = require("fs"),
-    Users = require('./UserData.js');
+    Users = require('./modules/UserData.js'),
+    Navigation = require('./modules/Navigation.js');
  var port = process.argv[2] || 8888;
  var server =  http.createServer(function(request, response) {
   var uri = url.parse(request.url).pathname
     , filename = path.join(process.cwd(), uri);
   fs.exists(filename, function (exists) {
-      if (request.url == "/app.js" || request.url == "/UserData.js") {
+      if (request.url == "/server.js" || request.url.startsWith("/modules/") == true) {
           response.writeHead(403, { "Content-Type": "text/plain" });
+          response.write("403 forbidden\n");
           response.end();
           return;
       }
@@ -37,7 +44,6 @@ var http = require("http"),
  var users = [];
  var io = require('socket.io')(server);
  io.on('connection', function (socket) {
-     //console.log(socket.id);
      socket.on('register', function (userdata) {
          Users.addNewAccount(userdata, function (err) {
              if (err) {
@@ -47,6 +53,23 @@ var http = require("http"),
                  socket.emit('RegistrationResult', userdata);
              }
          });
+     });
+     socket.on('userdata', function (id, fn) {
+         if (fn) {
+             Users.getUserById(id, fn);
+         }
+     });
+     socket.on('getmenu', function (AppData, fn) {
+         if (fn) {
+             if (AppData) {
+                 Navigation.getMenuForUser(AppData.User._id, fn);
+             } else {
+                 fn([{ "Title": "Home", "templateUrl": "home.html", "Controller": "" },
+   { "Title": "About", "templateUrl": "about.html", "Controller": "" }
+                 ])
+             }
+             //Users.getUserById(id, fn);
+         }
      });
      socket.on('authenticate', function (userdata) {
          Users.manualLogin(userdata.UserName, userdata.UserPass, function (err,user) {

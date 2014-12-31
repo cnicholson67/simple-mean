@@ -1,6 +1,5 @@
 body {
     margin:0px;
-    color:#111111;
 }
 .header{
     background-color:#c0c0c0;
@@ -16,23 +15,13 @@ body {
 	margin-left:10px;
 	margin-right:10px;
 }
-.menu>.login{
-    text-align:right;
-    }
 .menu ul,li
 {
-    float:left;
-    list-style:none;
     cursor:pointer;
-    text-decoration:underline;
-    -webkit-padding-start: 0px;
 }
-    .menu li
-    {
-            padding-right:10px;
-    }
 .main{
-	margin:10px;
+	margin-left:10px;
+    margin-right:10px;
 }
 .my-fade-container {
   position: relative;
@@ -60,7 +49,11 @@ body {
 }
 .content {
   position: absolute;
-  width: 98%;
-  height: 90%;
+  /*width: 95%;
+  height: 90%;*/
+}
+.content>div
+{
+    overflow:auto;
 }
 

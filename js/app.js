@@ -1,31 +1,62 @@
 var socket = io();
 var app = angular.module('App', ['ui.bootstrap', 'ngCookies', 'ngRoute', 'ngAnimate']);
-
-
-
 app.factory("Application",function(){
 	var AppData = {};
 	return AppData;
 });
 app.controller("Main", function ($scope, $modal, $cookies, $http, Application) {
+    function resetMenu() {
+        angular.forEach($scope.Menu, function (i) {
+            i.class = "";
+        });
+    }
+    function getMenu(){
+        socket.emit('getmenu', $scope.Application, function (menu) {
+            $scope.Menu = menu;
+            $scope.$apply();
+            if ($cookies.LastPage) {
+                var lp = JSON.parse($cookies.LastPage);
+                console.log(lp)
+                var pageselected = false;
+                angular.forEach($scope.Menu, function (itm, idx) {
+                    if (itm.Title == lp.Title) {
+                        pageselected = true;
+                        $scope.LoadPage($scope.Menu[idx]);
+                    }
+                });
+                if (pageselected == false) {
+                    $scope.LoadPage($scope.Menu[0]);
+                }
+            } else {
+                $scope.LoadPage($scope.Menu[0]);
+            }
+        });
+    }
     $scope.LoadPage = function (item) {
+        resetMenu();
+        item.class = "active";
+        $scope.EditProfileClass = "";
+        $cookies.LastPage = JSON.stringify(item);
         $scope.DisplayTemplate = "/tmpls/" + item.templateUrl + ""
     }
     $scope.$watch("Application", function (val) {
-        $scope.Menu = [{ "Title": "Home", "templateUrl": "home.html", "Controller": "" },
-            { "Title": "About", "templateUrl": "about.html", "Controller": "" },
-            { "Title": "Secure Page", "templateUrl": "SecuredPage.html", "Controller": "" ,"Secure":true}
-        ];
-        $scope.LoadPage($scope.Menu[0]);
-        console.log(val);
+        getMenu();
     });
+
     if ($cookies.AppData) {
         try {
             $scope.Application = JSON.parse($cookies.AppData);
-            
+            socket.emit('userdata', $scope.Application.User._id, function (data) {
+                $scope.Application.User = data;
+            });
         } catch (e) { }
+    } 
+    getMenu();
+    $scope.EditProfile = function () {
+        resetMenu();
+        $scope.EditProfileClass = "active";
+        $scope.DisplayTemplate = "/tmpls/profile.html"
     }
-	$scope.Placeholder = "Place Holder Text";
 	$scope.register = function () {
 	    var modalInstance = $modal.open({
 	        templateUrl: '/tmpls/register.html',
@@ -65,6 +96,7 @@ app.controller("Main", function ($scope, $modal, $cookies, $http, Application) {
     $scope.login = function () {
         var modalInstance = $modal.open({
             templateUrl: '/tmpls/login.html',
+            size: 'sm',
             controller: function ($scope, $modalInstance, items) {
                 $scope.UserName = "";
                 $scope.UserPass = "";
@@ -101,4 +133,6 @@ app.controller("Main", function ($scope, $modal, $cookies, $http, Application) {
         
     }
 });
+app.controller("AdminTabs", function ($scope, $modal, $cookies, $http, Application) {
 
+});

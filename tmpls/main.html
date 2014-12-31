@@ -1,20 +1,36 @@
-
-<div class="header">
- <div class="inner">
- 	Web Application
- </div>	
-</div>  
-<div class="menu">
-    <ul>
-        <li ng-repeat="item in Menu" ng-click="LoadPage(item)" ng-hide="((Application.User==null) && item.Secure==true)">{{item.Title}}</li>
-    </ul>
-    <div class="login">
-    <a ng-hide="Application.IsAuthenticated==true" href="" ng-click="login()">Login</a>
-    <a ng-hide="Application.IsAuthenticated==true" href="" ng-click="register()">Register</a>
-    <a ng-show="Application.IsAuthenticated==true" href="" ng-click="EditProfile()">{{Application.User.FirstName}} {{Application.User.LastName}}</a>
-    <a ng-show="Application.IsAuthenticated==true" href="" ng-click="logout()">Logout</a>
+<div class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header" style="cursor: pointer;">
+            <a class="navbar-brand" ng-click="LoadPage(Menu[0])">
+                <img style="height: 50px;" src="/assets/images/logo.png" /></a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main"
+                aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
         </div>
-</div> 
-<div class="my-slide-container">   
-<div class="main" ng-include="DisplayTemplate">
-</div></div>     
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav">
+                <li ng-class="item.class" ng-repeat="item in Menu" ng-hide="((Application.User==null) && item.Secure==true)">
+                    <a ng-click="LoadPage(item)">{{item.Title}}</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-hide="Application.IsAuthenticated==true"><a href="" ng-click="login()">Login</a>
+                </li>
+                <li ng-hide="Application.IsAuthenticated==true"><a href="" ng-click="register()">Register</a>
+                </li>
+                <li ng-class="EditProfileClass" ng-show="Application.IsAuthenticated==true"><a href=""
+                    ng-click="EditProfile()">{{Application.User.FirstName}} {{Application.User.LastName}}</a>
+                </li>
+                <li ng-show="Application.IsAuthenticated==true"><a href="" ng-click="logout()">Logout&nbsp;&nbsp;</a>
+                </li>
+            </ul>
+        </div>
+
+
+<div class="my-slide-container">
+    <div class="main" ng-include="DisplayTemplate">
+    </div>
+</div>
+</div>

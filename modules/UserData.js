@@ -13,7 +13,7 @@ db.open(function (e, d) {
     if (e) {
         console.log(e);
     } else {
-        console.log('connected to database :: ' + dbName);
+        //console.log('connected to database :: ' + dbName);
     }
 });
 var accounts = db.collection('accounts');
@@ -71,7 +71,6 @@ exports.addNewAccount = function (newData, callback) {
         }
     });
 }
-
 exports.updateAccount = function (newData, callback) {
     accounts.findOne({ user: newData.user }, function (e, o) {
         o.name = newData.name;
@@ -93,7 +92,6 @@ exports.updateAccount = function (newData, callback) {
         }
     });
 }
-
 exports.updatePassword = function (email, newPass, callback) {
     accounts.findOne({ email: email }, function (e, o) {
         if (e) {
@@ -122,7 +120,22 @@ exports.validateResetLink = function (email, passHash, callback) {
         callback(o ? 'ok' : null);
     });
 }
-
+exports.getUserById = function (id, callback) {
+    accounts.findOne({ _id: getObjectId(id) },
+		function (e, res) {
+		    if (e) { callback(null, e) }
+		    else {
+		        accounts.count(function (err, count) {
+		            //console.log(count);
+		            if (count == 1) {
+		                res.IsAdministrator = true;
+		            }
+		            delete res.Password;
+		            callback(res);
+		        });
+		    }
+		});
+};
 exports.getAllRecords = function (callback) {
     accounts.find().toArray(
 		function (e, res) {

@@ -18,12 +18,13 @@
             <ul class="nav navbar-nav navbar-right">
                 <li ng-hide="Application.IsAuthenticated==true"><a href="" ng-click="login()">Login</a>
                 </li>
-                <li ng-hide="Application.IsAuthenticated==true"><a href="" ng-click="register()">Register</a>
+                <li ng-hide="Application.IsAuthenticated==true"><a href="" ng-click="register()">Register&nbsp;&nbsp;</a>
                 </li>
                 <li ng-class="EditProfileClass" ng-show="Application.IsAuthenticated==true"><a href=""
                     ng-click="EditProfile()">{{Application.User.FirstName}} {{Application.User.LastName}}</a>
                 </li>
-                <li ng-show="Application.IsAuthenticated==true"><a href="" ng-click="logout()">Logout&nbsp;&nbsp;</a>
+                <li ng-show="Application.IsAuthenticated==true">
+                    <a href="" ng-click="logout()">Logout&nbsp;&nbsp;</a>
                 </li>
             </ul>
         </div>

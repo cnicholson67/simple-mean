@@ -16,7 +16,7 @@ app.controller("Main", function ($scope, $modal, $cookies, $http, Application) {
             $scope.$apply();
             if ($cookies.LastPage) {
                 var lp = JSON.parse($cookies.LastPage);
-                console.log(lp)
+                //console.log(lp)
                 var pageselected = false;
                 angular.forEach($scope.Menu, function (itm, idx) {
                     if (itm.Title == lp.Title) {

@@ -23,7 +23,7 @@ exports.getMenuForUser = function (uid, callback) {
 		    if (e) { callback(null, e) }
 		    else {
 		        accounts.count(function (err, count) {
-		            console.log(count);
+		            //console.log(count);
 		            if (count == 1) {
 		                res.IsAdministrator = true;
 		            }
